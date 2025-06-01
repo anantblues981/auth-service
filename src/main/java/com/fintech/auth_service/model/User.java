@@ -20,8 +20,22 @@ public class User {
     private String passwordHash;
 
     @Column(nullable = false)
+    private LocalDateTime modifiedAt;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private boolean isVerified;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        modifiedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        modifiedAt = LocalDateTime.now();
+    }
 }
